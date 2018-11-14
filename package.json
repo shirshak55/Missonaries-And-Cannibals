@@ -9,7 +9,9 @@
     "tailwindcss": "^0.7.2"
   },
   "scripts": {
+    "prestart": "tailwind build ./src/css/tailwind.css -c ./tailwind.js -o ./src/css/index.css",
     "start": "react-scripts start",
+    "prebuild": "tailwind build ./src/css/tailwind.css -c ./tailwind.js -o ./src/css/index.css",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
