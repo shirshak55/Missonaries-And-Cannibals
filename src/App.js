@@ -3,17 +3,15 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import MC from "./MC";
 import Tree from "./Tree";
 
-
 export default class App extends Component {
     render() {
     	return (
-            <MC />
-	    		// <BrowserRouter>
-       //              <div>
-    	  //   			<Route path="/mc" component={MC} />
-    	  //   			<Route path="/tree" component={Tree} />
-       //              </div>
-	    		// </BrowserRouter>
+	    		 <BrowserRouter>
+                    <div>
+    	     			<Route path="/mc" component={MC} />
+    	     			<Route path="/tree" component={Tree} />
+                    </div>
+	    		 </BrowserRouter>
     	)
     }
 }

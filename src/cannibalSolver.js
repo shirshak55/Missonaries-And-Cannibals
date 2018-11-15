@@ -76,7 +76,7 @@ function generateTree(init_state) {
   var visited = [];
   var queue = [{state: init_state}];
   let i = 0;
-  tree = [init_state];
+  tree = [[{state:init_state}]];
   while (queue.length !== 0) {
      i++;
      let candidate = queue.splice(0,1)[0];

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import cannibalSolver from './cannibalSolver';
 
 const tree = cannibalSolver.tree;
-console.log(tree);
 
 function Node(props){
     return (
@@ -21,7 +20,9 @@ export default class App extends Component {
 	render() {
     	return (
     		<div>
-                <Node value={cannibalSolver.tree} />
+                <pre>
+                    {JSON.stringify(tree, null, 4)}
+                </pre>
     		</div>
     	)
     }
