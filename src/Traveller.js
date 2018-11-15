@@ -4,13 +4,13 @@ import demon from "./images/demon.svg";
 
 export default class Traveller extends Component {
 	render() {
-		const {color, id, handleTravellerClick, type } = this.props;
+		const {handleTravellerClick, type } = this.props;
 
 		return (
 			<div onClick={handleTravellerClick} className={`h-10 w-10  flex justify-center items-center`} style={{cursor: 'pointer'}}>
 				{	type === "priest" ?
-					(<img src={woman}/>):
-					(<img src={demon}/>)
+					(<img src={woman} alt="click"/>):
+					(<img src={demon} alt="click"/>)
 				}
 			</div>
 		);
