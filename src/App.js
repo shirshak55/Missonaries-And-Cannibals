@@ -21,16 +21,21 @@ export default class App extends Component {
 
 
         this.state = {
-            left: [
-                this.generatePriest(1),
-                this.generatePriest(2),
-                this.generatePriest(3),
-                this.generateDemon(4),
-                this.generateDemon(5),
-                this.generateDemon(6),
-            ],
-            middle: [],
-            right: []
+            travller: {
+                left: [
+                    this.generatePriest(1),
+                    this.generatePriest(2),
+                    this.generatePriest(3),
+                    this.generateDemon(4),
+                    this.generateDemon(5),
+                    this.generateDemon(6),
+                ],
+                middle: [],
+                right: []
+            },
+            boat: {
+                position: "left",
+            }
         }
 
         this.handleClick = this.handleClick.bind(this);
@@ -55,24 +60,24 @@ export default class App extends Component {
     }
 
     handleClick(id, position) {
-        const state = {...this.state}
+        const travellerState = {...this.state.traveller}
         let posToDelete,indexToDelete;
-        if(position === "middle" && state.middle.length >= 2){
+        if(position === "middle" && travellerState.middle.length >= 2){
             alert('Already 2 members on boat');
             return;
         }
 
-        for(let pos in state) {
-            state[pos].forEach((traveller, travellerIndex)=>{
+        for(let pos in travellerState) {
+            travellerState[pos].forEach((traveller, travellerIndex)=>{
                 if(traveller.id === id){
                     posToDelete = pos;
                     indexToDelete = travellerIndex
                 }
             })
         }
-        state[position].push(state[posToDelete][indexToDelete]);
-        state[posToDelete].splice(indexToDelete,1);                 
-        this.setState(state);
+        travellerState[position].push(travellerState[posToDelete][indexToDelete]);
+        travellerState[posToDelete].splice(indexToDelete,1);                 
+        this.setState({travellerState});
     }
 
     render() {
@@ -83,14 +88,14 @@ export default class App extends Component {
                 className="h-full flex flex-col justify-around items-center"
                 handleClick={this.handleClick} 
                 toPosition="middle" 
-                travellers={this.state.left}/>
+                travellers={this.state.travellerState.left}/>
           	</div>
     		
     		<div className="bg-blue w-3/5 flex flex-col justify-center">
                 <Boat 
                     travellers={<ChangeToTraveller className="h-full flex  flex-row-reverse justify-around items-center" handleClick={this.handleClick} 
                     toPosition="right" 
-                    travellers={this.state.middle}/>}
+                    travellers={this.state.travellerState.middle}/>}
                 />
     		</div>
 
@@ -99,7 +104,7 @@ export default class App extends Component {
                     className="h-full flex flex-col justify-around items-center"
                     handleClick={this.handleClick} 
                     toPosition="middle" 
-                    travellers={this.state.right}/>
+                    travellers={this.state.travellerState.right}/>
     		</div>
           </div>
         );
