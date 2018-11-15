@@ -1,0 +1,19 @@
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+.smooth-transition {
+	transition: all 1s;
+}
+
+.boat{
+	width:20%;
+	height:60px;
+}
+.boat-left {
+	left:0%;
+}
+
+.boat-right {
+	left: 80%;
+}
