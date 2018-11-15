@@ -1,24 +1,7 @@
 var BOAT_SIZE = 2;
-var tree;
+let tree = [];
 
-function init(n) {
-  var state = {
-    boat: 'left',
-    left: {
-      cannibal: n,
-      missionary: n
-    },
-    right: {
-      cannibal: 0,
-      missionary: 0
-    }
-  };
-  return state;
-}
 
-function failed() {
-  console.log("no solution found");
-}
 
 function is_success(candidate, n) {
   var state = candidate.state;
@@ -94,11 +77,11 @@ function do_success(candidate) {
       candidate = candidate.from;
     }
     for (var i = ls.length-1; i >= 0; i--) {
-      tree[] = ls[i].state;
+      tree.push(ls[i].state);
     }
 }
 
-function plan(init_state) {
+function generateTree(init_state) {
   var visited = [];
   var fringe = [{state: init_state}];
   while (fringe.length != 0) {
@@ -107,22 +90,27 @@ function plan(init_state) {
      if (contains(visited, candidate.state)) {
          continue;
      }
-     if  (is_success(candidate, n)) {
+     if  (is_success(candidate, 3)) {
          do_success(candidate);
      }
      visited.push(candidate.state);
      var children = get_children(candidate);
      fringe = fringe.concat(children);
   }
-  failed();
 }
-
-function main (n){
-  var init_state = init(n);
-  plan(init_state);
+function init(n) {
+  return {
+    boat: 'left',
+    left: {
+      cannibal: n,
+      missionary: n
+    },
+    right: {
+      cannibal: 0,
+      missionary: 0
+    }
+  };
 }
-
-var n = 3;
-main(n);
-
+generateTree(init(3))
+console.log(tree)
 export default tree;
