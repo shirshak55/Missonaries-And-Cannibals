@@ -7,12 +7,13 @@ import Tree from "./Tree";
 export default class App extends Component {
     render() {
     	return (
-	    		<BrowserRouter>
-                    <div>
-    	    			<Route path="/mc" component={MC} />
-    	    			<Route path="/tree" component={Tree} />
-                    </div>
-	    		</BrowserRouter>
+            <MC />
+	    		// <BrowserRouter>
+       //              <div>
+    	  //   			<Route path="/mc" component={MC} />
+    	  //   			<Route path="/tree" component={Tree} />
+       //              </div>
+	    		// </BrowserRouter>
     	)
     }
 }

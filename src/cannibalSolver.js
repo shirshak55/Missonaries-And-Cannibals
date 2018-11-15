@@ -1,15 +1,15 @@
 var BOAT_SIZE = 2;
 let tree = [];
+let successfulPath = [];
 
-function is_success(candidate, n) {
-  var state = candidate.state;
+function is_success(state) {
   return state.left.cannibal    === 0 &&
          state.left.missionary  === 0 &&
-         state.right.cannibal   === n &&
-         state.right.missionary === n;  
+         state.right.cannibal   === 3 &&
+         state.right.missionary === 3;  
 }
 
-function get_other_side(side) {
+function opposite_bank(side) {
   if (side === 'left') return 'right';
   else return 'left';
 }
@@ -18,7 +18,7 @@ function get_children(candidate) {
   var children = [];
   var state = candidate.state;
   var side  = state[state.boat];
-  var other_side = get_other_side(state.boat);
+  var other_side = opposite_bank(state.boat);
 
   for (var c = 0; c <= side.cannibal; c++) {
     if (c > BOAT_SIZE) continue;
@@ -47,11 +47,10 @@ function get_children(candidate) {
         children.push(obj);
     }
   }
-
   return children;
 }
 
-function contains(visited, state) {
+function is_node_visited(visited, state) {
   for (var i = 0; i < visited.length; i++) {
       var v = visited[i];
       if (v.boat === state.boat 
@@ -64,32 +63,33 @@ function contains(visited, state) {
   return false;
 }
 
-function do_success(candidate) {
-    var ls = [];
-    while (candidate !== undefined) {
-      ls.push(candidate);
-      candidate = candidate.from;
-    }
-    for (var i = ls.length-1; i >= 0; i--) {
-      // tree.push(ls[i]);
-    }
-    tree = ls;
+function success_action(candidate) {
+  const stack = [];
+  while(candidate !== undefined){
+    stack.push(candidate.state);
+    candidate = candidate.from;
+  }
+  successfulPath = stack.reverse()
 }
 
 function generateTree(init_state) {
   var visited = [];
-  var fringe = [{state: init_state}];
-  while (fringe.length !== 0) {
-     var candidate = fringe.splice(0,1)[0];
-     if (contains(visited, candidate.state)) {
+  var queue = [{state: init_state}];
+  let i = 0;
+  tree = [init_state];
+  while (queue.length !== 0) {
+     i++;
+     let candidate = queue.splice(0,1)[0];
+     if (is_node_visited(visited, candidate.state)) {
          continue;
      }
-     if  (is_success(candidate, 3)) {
-         do_success(candidate);
+     if  (is_success(candidate.state)) {
+         success_action(candidate);
      }
      visited.push(candidate.state);
      var children = get_children(candidate);
-     fringe = fringe.concat(children);
+     tree.push(children);
+     queue = queue.concat(children);
   }
 }
 generateTree({
@@ -103,4 +103,7 @@ generateTree({
       missionary: 0
     }
   });
-export default tree;
+export default {
+  tree,
+  successfulPath
+}
