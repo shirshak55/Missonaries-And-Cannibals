@@ -5,11 +5,11 @@ import Boat from "./Boat"
 class ChangeToTraveller extends Component {
     render() {
         const props = this.props;
-        const {className} = this.props;
+        const {traveller{id}, className, toPosition} = this.props;
 
         return (
             <div className={className}>
-                { props.travellers.map( (traveller) => <Traveller handleTravellerClick={() => props.handleTravellerClick(traveller.id, props.toPosition)} {...traveller} key={traveller.id} />) }
+                { props.travellers.map( (traveller) => <Traveller handleTravellerClick={(e) => props.handleTravellerClick(e, traveller.id, toPosition)} {...traveller} key={traveller.id} />) }
             </div>
         );
     }
@@ -59,7 +59,8 @@ export default class App extends Component {
         return traveller;
     }
 
-    handleTravellerClick(id, position) {
+    handleTravellerClick(event, id, position) {
+        event.stopPropagation();
         const travellerState = {...this.state.traveller}
         let posToDelete,indexToDelete;
 
@@ -84,6 +85,11 @@ export default class App extends Component {
     handleBoatClick() {
         const boatState = {...this.state.boatState}
         const initialPosition = this.state.boat.position;
+
+        if(this.state.traveller.middle.length === 0){
+            alert("There is no travller on boat");
+            return;
+        }
 
         let newPosition;
 
